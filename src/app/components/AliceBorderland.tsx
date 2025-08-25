@@ -136,32 +136,15 @@ const AliceStudiosPortfolio = () => {
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
-      {/* Navigation */}
-      <nav className="bg-black/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-40 p-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold text-white">
-            ALICE STUDIOS
-          </div>
-          <div className="hidden md:flex gap-2">
-            {['Home', 'Services', 'About', 'Portfolio', 'Contact'].map((item) => (
-              <button
-                key={item}
-                className={`px-6 py-2 font-medium transition-all duration-300 rounded-lg ${
-                  activeSection === item.toLowerCase() 
-                    ? 'bg-red-600 text-white' 
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                }`}
-                onClick={() => setActiveSection(item.toLowerCase())}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
+      {/* Logo Only - Top Left */}
+      <div className="fixed top-8 left-8 z-40">
+        <div className="text-4xl font-light text-white tracking-wide" style={{fontFamily: 'Helvetica Neue, Arial, sans-serif', fontWeight: '300', letterSpacing: '0.1em'}}>
+          ALICE STUDIOS
         </div>
-      </nav>
+      </div>
 
       {/* Hero Section with Full Background Video */}
-      <section className="min-h-screen relative overflow-hidden">
+      <section className="h-screen relative overflow-hidden">
         {/* Full Background Video */}
         <div className="absolute inset-0 w-full h-full">
           <video 
@@ -179,7 +162,7 @@ const AliceStudiosPortfolio = () => {
         </div>
 
         {/* Content Overlay */}
-        <div className="relative z-10 min-h-screen flex items-center justify-center px-6">
+        <div className="relative z-10 h-screen flex items-center justify-center px-6">
           <div className="max-w-7xl mx-auto w-full">
             <div className="text-center">
               {/* Main Heading */}
