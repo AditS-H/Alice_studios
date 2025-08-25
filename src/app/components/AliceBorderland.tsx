@@ -216,6 +216,13 @@ const AliceStudiosPortfolio = () => {
         .animate-scroll {
           animation: scroll 30s linear infinite;
         }
+        @keyframes hop {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+        .rabbit-hop {
+          animation: hop 0.6s ease-in-out;
+        }
       `}</style>
       {/* Logo Only - Top Left */}
       <div className="fixed top-8 left-8 z-40">
@@ -396,18 +403,27 @@ const AliceStudiosPortfolio = () => {
             </button>
           </div>
 
-          {/* Slide Indicators */}
-          <div className="flex justify-center mt-6 gap-2">
+          {/* Slide Indicators with Rabbit */}
+          <div className="flex justify-center mt-6 gap-2 items-center relative">
             {experts.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentExpertSlide(index)}
-                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  currentExpertSlide === index 
-                    ? 'bg-red-500' 
-                    : 'bg-gray-600'
-                }`}
-              />
+              <React.Fragment key={index}>
+                {currentExpertSlide === index ? (
+                  <div className="relative">
+                    <span 
+                      className="text-2xl rabbit-hop cursor-pointer hover:scale-110 transition-transform duration-200"
+                      onClick={() => setCurrentExpertSlide(index)}
+                      key={`rabbit-${currentExpertSlide}`} // Key changes to trigger re-animation
+                    >
+                      🐰
+                    </span>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setCurrentExpertSlide(index)}
+                    className="w-3 h-3 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors duration-300"
+                  />
+                )}
+              </React.Fragment>
             ))}
           </div>
         </div>
