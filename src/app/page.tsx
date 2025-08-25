@@ -1,5 +1,11 @@
-import AliceBorderland from './components/AliceBorderland';
+import AliceStudiosPortfolio from './components/AliceBorderland';
+import AliceStudiosPortfolio1 from './components/AliceBorderland1';
 
 export default function Home() {
-  return <AliceBorderland />;
+  return (
+    <main>
+      <AliceStudiosPortfolio />
+      <AliceStudiosPortfolio1 />
+    </main>
+  );
 }

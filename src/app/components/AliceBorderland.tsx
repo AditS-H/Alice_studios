@@ -5,7 +5,79 @@ import React, { useState, useEffect, useRef } from 'react';
 const AliceStudiosPortfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isStatsVisible, setIsStatsVisible] = useState(false);
+  const [currentExpertSlide, setCurrentExpertSlide] = useState(0);
   const statsRef = useRef(null);
+  
+  // Expert data
+  const experts = [
+    {
+      name: "Codie Sanchez",
+      handle: "@CodieSanchezCT", 
+      subscribers: "1.49M subscribers",
+      avatar: "👩‍💼"
+    },
+    {
+      name: "Mike Posner",
+      handle: "@MikePosner",
+      subscribers: "3.5M subscribers", 
+      avatar: "👨‍🎤"
+    },
+    {
+      name: "Dr. Izzy Sealey",
+      handle: "@IzzySealey",
+      subscribers: "675K subscribers",
+      avatar: "👩‍⚕️"
+    },
+    {
+      name: "Neil Patel", 
+      handle: "@NeilPatel",
+      subscribers: "1.35M subscribers",
+      avatar: "👨‍💼"
+    },
+    {
+      name: "Ali Abdaal",
+      handle: "@aliabdaal",
+      subscribers: "5.93M subscribers",
+      avatar: "👨‍💻"
+    },
+    {
+      name: "Chris Williamson",
+      handle: "@ChrisWillx", 
+      subscribers: "2.91M subscribers",
+      avatar: "🎙️"
+    },
+    {
+      name: "Beast Philanthropy",
+      handle: "@BeastPhilanthropy",
+      subscribers: "26.4M subscribers",
+      avatar: "🤝"
+    },
+    {
+      name: "Emma Chamberlain",
+      handle: "@emmachamberlain",
+      subscribers: "11.9M subscribers", 
+      avatar: "👩‍🎨"
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentExpertSlide((prev) => (prev + 1) % experts.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentExpertSlide((prev) => (prev - 1 + experts.length) % experts.length);
+  };
+
+  // Get 4 visible experts based on current slide
+  const getVisibleExperts = () => {
+    const visibleExperts = [];
+    for (let i = 0; i < 4; i++) {
+      const index = (currentExpertSlide + i) % experts.length;
+      visibleExperts.push(experts[index]);
+    }
+    return visibleExperts;
+  };
+
   // Automatically scroll up after 8 seconds on front page
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -136,6 +208,15 @@ const AliceStudiosPortfolio = () => {
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
+      <style jsx>{`
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+          animation: scroll 30s linear infinite;
+        }
+      `}</style>
       {/* Logo Only - Top Left */}
       <div className="fixed top-8 left-8 z-40">
         <div className="text-4xl font-light text-white tracking-wide" style={{fontFamily: 'Helvetica Neue, Arial, sans-serif', fontWeight: '300', letterSpacing: '0.1em'}}>
@@ -180,13 +261,26 @@ const AliceStudiosPortfolio = () => {
               
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Button 
-                  variant="primary" 
+                <button 
                   onClick={() => setActiveSection('services')}
-                  className="text-lg px-10 py-5"
+                  className="relative bg-red-600 hover:bg-red-700 text-white font-bold text-lg px-12 py-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-red-500/25 group overflow-hidden"
                 >
-                  View Our Services
-                </Button>
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex flex-col items-start transition-transform duration-300 group-hover:-translate-x-4">
+                      <span className="text-lg font-bold">RESERVE YOUR SPOT</span>
+                      <div className="flex items-center gap-2 text-sm opacity-90">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                        <span>2 slots left for Aug</span>
+                      </div>
+                    </div>
+                    <div className="bg-white/20 rounded-full p-2 group-hover:bg-white/30 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0">
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-white/5 to-red-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                </button>
                 <Button 
                   variant="secondary" 
                   onClick={() => setActiveSection('contact')}
@@ -209,6 +303,33 @@ const AliceStudiosPortfolio = () => {
         </div>
       </section>
 
+      {/* Moving Logos Section */}
+      <section className="bg-gray-950/95 py-8 overflow-hidden border-y border-gray-800/50">
+        <div className="flex animate-scroll">
+          <div className="flex items-center space-x-20 whitespace-nowrap">
+            {/* First set of logos */}
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">NETFLIX</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">SPOTIFY</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">ADOBE</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">MICROSOFT</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">GOOGLE</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">APPLE</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">TESLA</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">META</div>
+            
+            {/* Duplicate set for seamless loop */}
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300 ml-20">NETFLIX</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">SPOTIFY</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">ADOBE</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">MICROSOFT</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">GOOGLE</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">APPLE</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">TESLA</div>
+            <div className="text-xl font-light text-gray-400 tracking-widest opacity-70 hover:opacity-100 transition-opacity duration-300">META</div>
+          </div>
+        </div>
+      </section>
+
       {/* Stats Section with Rolling Counters */}
       <section ref={statsRef} className="py-20 px-6 bg-gray-950">
         <div className="max-w-6xl mx-auto">
@@ -221,186 +342,110 @@ const AliceStudiosPortfolio = () => {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-20 px-6 bg-gray-950">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-bold text-center text-white mb-4">
-            Our Services
+      {/* Team/Experts Section */}
+      <section className="py-20 bg-gray-950">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-4 tracking-wide">
+            HOME TO GENUINE EXPERTS
           </h2>
-          <p className="text-center text-gray-400 mb-16 text-lg max-w-2xl mx-auto">
-            We offer comprehensive digital solutions to help you succeed in the online world
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ServiceCard
-              title="YouTube Growth"
-              icon="📺"
-              description="Transform your YouTube channel with proven strategies that drive subscriber growth, increase engagement, and maximize revenue potential."
-            />
-            <ServiceCard
-              title="Content Creation"
-              icon="🎬"
-              description="Professional video production, editing, and content strategy that captivates audiences and builds lasting connections with your brand."
-            />
-            <ServiceCard
-              title="Web Development"
-              icon="💻"
-              description="Custom websites and web applications built with modern technologies, optimized for performance, SEO, and user experience."
-            />
-            <ServiceCard
-              title="Brand Identity"
-              icon="✨"
-              description="Complete brand identity design including logos, visual guidelines, and marketing materials that make your business stand out."
-            />
-            <ServiceCard
-              title="Digital Marketing"
-              icon="📈"
-              description="Strategic digital marketing campaigns across multiple platforms to grow your audience and drive conversions."
-            />
-            <ServiceCard
-              title="Consulting"
-              icon="🎯"
-              description="Expert guidance and consulting services to help you navigate the digital landscape and achieve your business goals."
-            />
+          <h3 className="text-4xl md:text-5xl font-bold text-center text-white mb-16 tracking-wide">
+            AND THOUGHT-LEADERS
+          </h3>
+        </div>
+        
+        <div className="w-full">
+          {/* Expert Cards - With gaps and rounded corners */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6 max-w-7xl mx-auto">
+            {getVisibleExperts().map((expert, index) => (
+              <div key={`${expert.name}-${currentExpertSlide}-${index}`} className="bg-gray-200 hover:transform hover:scale-105 transition-all duration-300 group rounded-2xl overflow-hidden shadow-lg">
+                <div className="aspect-[4/5] bg-gradient-to-br from-gray-300 to-gray-400 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-40 h-40 rounded-full bg-gray-100 flex items-center justify-center">
+                      <span className="text-6xl">{expert.avatar}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-8 bg-black">
+                  <h3 className="text-3xl font-bold text-white mb-4">{expert.name}</h3>
+                  <div className="border-t border-gray-700 pt-4">
+                    <p className="text-gray-400 text-lg mb-2">{expert.handle}</p>
+                    <p className="text-white font-semibold text-lg">{expert.subscribers}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-center gap-4 mt-8">
+            <button 
+              onClick={prevSlide}
+              className="w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors duration-300"
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button 
+              onClick={nextSlide}
+              className="w-12 h-12 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors duration-300"
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Slide Indicators */}
+          <div className="flex justify-center mt-6 gap-2">
+            {experts.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentExpertSlide(index)}
+                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                  currentExpertSlide === index 
+                    ? 'bg-red-500' 
+                    : 'bg-gray-600'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-20 px-6 bg-black">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-5xl font-bold text-white mb-6">About Alice Studios</h2>
-              <p className="text-gray-300 text-lg mb-6 leading-relaxed">
-                We are a creative digital studio passionate about helping creators and businesses thrive in the digital world. 
-                Our team combines technical expertise with creative vision to deliver exceptional results.
-              </p>
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-                From growing YouTube channels from zero to millions of views, to building stunning websites that convert, 
-                we&apos;re your partners in digital success.
-              </p>
-              
-              <div className="space-y-4">
-                <div className="flex items-center gap-4 p-4 bg-gray-900 rounded-lg border border-gray-800">
-                  <div className="text-2xl">🏆</div>
-                  <div>
-                    <h4 className="font-bold text-white">Award-Winning Work</h4>
-                    <p className="text-gray-400 text-sm">Recognized for excellence in digital creative solutions</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 bg-gray-900 rounded-lg border border-gray-800">
-                  <div className="text-2xl">🚀</div>
-                  <div>
-                    <h4 className="font-bold text-white">Results-Driven</h4>
-                    <p className="text-gray-400 text-sm">Focused on delivering measurable growth and success</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 bg-gray-900 rounded-lg border border-gray-800">
-                  <div className="text-2xl">🤝</div>
-                  <div>
-                    <h4 className="font-bold text-white">Client Partnership</h4>
-                    <p className="text-gray-400 text-sm">We work closely with you to achieve your vision</p>
-                  </div>
-                </div>
-              </div>
+      {/* YouTube Video Section */}
+      <section className="py-20 bg-black">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-wide">
+              SEE OUR WORK IN ACTION
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Watch how we've helped creators achieve 4x growth in their subscriber base through our proven strategies and creative solutions.
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-red-500/20 border border-gray-800 hover:border-red-500 transition-all duration-500">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="Alice Studios - 4x Your Subscriber Base"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
             </div>
             
-            <div className="relative">
-              <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 border border-gray-700">
-                <div className="grid grid-cols-2 gap-6 mb-6">
-                  <div className="text-center p-4 bg-black rounded-lg">
-                    <div className="text-3xl font-bold text-red-500">98%</div>
-                    <div className="text-gray-400 text-sm">Client Satisfaction</div>
-                  </div>
-                  <div className="text-center p-4 bg-black rounded-lg">
-                    <div className="text-3xl font-bold text-red-500">24/7</div>
-                    <div className="text-gray-400 text-sm">Support Available</div>
-                  </div>
-                  <div className="text-center p-4 bg-black rounded-lg">
-                    <div className="text-3xl font-bold text-red-500">2-4</div>
-                    <div className="text-gray-400 text-sm">Week Delivery</div>
-                  </div>
-                  <div className="text-center p-4 bg-black rounded-lg">
-                    <div className="text-3xl font-bold text-red-500">100%</div>
-                    <div className="text-gray-400 text-sm">Custom Solutions</div>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h3 className="text-white font-bold text-xl mb-2">Why Choose Us?</h3>
-                  <p className="text-gray-400">We deliver exceptional results through creativity, expertise, and dedication to your success.</p>
-                </div>
+            <div className="mt-8 text-center">
+              <div className="inline-flex items-center gap-4 bg-gray-900 rounded-full px-6 py-3 border border-gray-700">
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-gray-300 font-medium">Live Case Study: 4x Subscriber Growth</span>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-red-900 to-red-700">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Ready to Grow?
-          </h2>
-          <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Let&apos;s work together to take your digital presence to the next level. 
-            Contact us today to discuss your project and see how we can help you succeed.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button variant="secondary" className="text-xl px-10 py-5" onClick={() => {}}>Start Your Project</Button>
-            <Button variant="outline" className="text-xl px-10 py-5 border-white text-white hover:bg-white hover:text-red-700" onClick={() => {}}>View Portfolio</Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black border-t border-gray-800 py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold text-white mb-4">Alice Studios</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Creative digital studio specializing in YouTube growth, web development, and brand building.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold text-white mb-4">Services</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-gray-400 hover:text-red-500 transition-colors">YouTube Growth</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Content Creation</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Web Development</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Brand Identity</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-gray-400 hover:text-red-500 transition-colors">About</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Portfolio</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Blog</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Careers</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold text-white mb-4">Contact</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>hello@alicestudios.com</li>
-                <li>+1 (555) 123-4567</li>
-                <li>Follow us on social media</li>
-              </ul>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2025 Alice Studios. All rights reserved.
-            </div>
-            <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-red-500 transition-colors text-sm">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-red-500 transition-colors text-sm">Terms of Service</a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
