@@ -437,7 +437,7 @@ const AliceStudiosPortfolio = () => {
               SEE OUR WORK IN ACTION
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Watch how we've helped creators achieve 4x growth in their subscriber base through our proven strategies and creative solutions.
+              Watch how we&apos;ve helped creators achieve 4x growth in their subscriber base through our proven strategies and creative solutions.
             </p>
           </div>
           

@@ -320,7 +320,7 @@ const AliceStudiosPortfolio1 = () => {
                   </div>
                 </div>
                 <p className="text-gray-300 text-sm leading-relaxed italic">
-                  "Went from 10K to 500K subscribers in 8 months using these strategies. The ROI on this course was incredible."
+                  &quot;Went from 10K to 500K subscribers in 8 months using these strategies. The ROI on this course was incredible.&quot;
                 </p>
                 <div className="flex text-yellow-400 mt-3 text-sm">
                   ⭐⭐⭐⭐⭐
@@ -338,7 +338,7 @@ const AliceStudiosPortfolio1 = () => {
                   </div>
                 </div>
                 <p className="text-gray-300 text-sm leading-relaxed italic">
-                  "The monetization course alone made me 6 figures this year. Best investment I've made for my business."
+                  &quot;The monetization course alone made me 6 figures this year. Best investment I&lsquo;ve made for my business.&quot;
                 </p>
                 <div className="flex text-yellow-400 mt-3 text-sm">
                   ⭐⭐⭐⭐⭐
@@ -356,7 +356,7 @@ const AliceStudiosPortfolio1 = () => {
                   </div>
                 </div>
                 <p className="text-gray-300 text-sm leading-relaxed italic">
-                  "Clear, actionable strategies that actually work. My engagement and subscriber growth skyrocketed!"
+                  &quot;Clear, actionable strategies that actually work. My engagement and subscriber growth skyrocketed!&quot;
                 </p>
                 <div className="flex text-yellow-400 mt-3 text-sm">
                   ⭐⭐⭐⭐⭐
